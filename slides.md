@@ -694,52 +694,36 @@ layout: section
 ---
 
 <script setup>
-import { ref } from 'vue'
-import { codeToHtml } from 'shiki'
+import { ref, onMounted, onUnmounted } from 'vue'
+import * as monaco from 'monaco-editor'
 
-
-const formCode = ref(`
+const showCode = defineModel(false)
+const mediaCode = ref(`
   <div>
     <audio controls>
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+      <source 
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" 
+        type="audio/mpeg" 
+      />
     </audio>
 
     <video controls width="320" poster="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg">
-      <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
-      <track kind="subtitles" src="https://raw.githubusercontent.com/mdn/learning-area/main/html/multimedia-and-embedding/video-and-audio-content/subtitles-en.vtt" srclang="en" />
+      <source 
+        src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" 
+        type="video/mp4" 
+      />
+      <track 
+        kind="subtitles" 
+        src="https://raw.githubusercontent.com/mdn/learning-area/main/html/multimedia-and-embedding/video-and-audio-content/subtitles-en.vtt" 
+        srclang="en" 
+      />
     </video>
   </div>
 `.trim())
 
-
-
-// const code = 'const a = 1' // input code
-const html = await codeToHtml(formCode, {
-  lang: 'javascript'
-})
-
-console.log(html) // highlighted html string
-const showCode = ref(true)
 </script>
 
-<div class="grid grid-cols-2 gap-4">
-<div v-if="showCode">
-
-<span class="text-xs opacity-50">Edit this code ↓</span>
-
-<!-- <textarea v-model="formCode" rows="9" class="w-full font-mono" style="background:#1e1e1e;color:#d4d4d4;padding:0.75rem;border-radius:6px;border:none;font-size:0.75em;resize:vertical"></textarea> -->
-
-div
-
-</div>
-<div class="border border-gray-400/50 rounded-lg p-3">
-
-<span class="text-xs opacity-50">Live result ↓</span>
-
-  <div v-html="formCode" class="flex gap-3 items-start flex-wrap mt-2"></div>
-
-</div>
-</div>
+<CodePreview v-model="mediaCode" v-model:showCode="showCode" />
 
 ---
 layout: section
