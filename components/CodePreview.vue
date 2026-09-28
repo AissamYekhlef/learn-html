@@ -48,7 +48,13 @@ onUnmounted(() => editorInstance?.dispose())
   <div class="grid gap-4" :class="showCode ? 'grid-cols-2' : 'grid-cols-1'">
     <div v-show="showCode"  class="border border-gray-400/50 rounded-lg p-3">
       <span class="text-xs opacity-50">{{ editorLabel }}</span>
-      <div ref="editorContainer" :style="{ height, borderRadius: '6px', overflow: 'auto' }" />
+      <div 
+        ref="editorContainer" 
+        :style="{ height, borderRadius: '6px', overflow: 'auto' }"
+        @keydown.stop
+        @keyup.stop
+        @keypress.stop 
+      />
     </div>
 
     <div class="border border-gray-400/50 rounded-lg p-3">
